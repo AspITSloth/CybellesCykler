@@ -21,7 +21,7 @@ namespace CybellesCykler
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void BtnShowRentees_Click(object sender, RoutedEventArgs e)
