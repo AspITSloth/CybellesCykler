@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 namespace CybellesCykler
 {
     /// <summary>
@@ -36,7 +37,9 @@ namespace CybellesCykler
 
         private void BtnShowOrders_Click(object sender, RoutedEventArgs e)
         {
-
+            Orders orders = new Orders();
+            orders.Show();
+            orders.Focus();
         }
     }
 }

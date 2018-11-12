@@ -120,6 +120,8 @@ namespace Entities
         }
         public decimal GetPrice()
         {
+            
+            decimal price = Bike.PricePerDay * RentDate.
             return 0;
         }
     }
