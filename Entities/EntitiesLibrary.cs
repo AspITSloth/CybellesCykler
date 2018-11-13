@@ -120,9 +120,10 @@ namespace Entities
         }
         public decimal GetPrice()
         {
-            
-            decimal price = Bike.PricePerDay * RentDate.
-            return 0;
+            TimeSpan rentingSpan = DeliveryDate - RentDate;
+            decimal.TryParse(rentingSpan.TotalDays.ToString(), out decimal totalRentDays);
+            decimal price = Bike.PricePerDay * totalRentDays;
+            return price;
         }
     }
 

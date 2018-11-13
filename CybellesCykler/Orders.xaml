@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="Orders" Height="454.4" Width="495.2">
     <Grid>
-        <ListBox HorizontalAlignment="Left" Height="329" Margin="10,36,0,0" VerticalAlignment="Top" Width="199"/>
+        <ListBox x:Name="lbx_Orders" HorizontalAlignment="Left" Height="329" Margin="10,36,0,0" VerticalAlignment="Top" Width="199"/>
         <Label Content="Orders" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138"/>
-        <Button Content="Opret" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top" Width="59"/>
-        <Button Content="Rediger" HorizontalAlignment="Left" Margin="80,370,0,0" VerticalAlignment="Top" Width="59"/>
-        <Button Content="Slet" HorizontalAlignment="Left" Margin="150,370,0,0" VerticalAlignment="Top" Width="59"/>
+        <Button x:Name="btn_Create" Content="Opret" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top" Width="59" Click="btn_Create_Click"/>
+        <Button x:Name="btn_Edit" Content="Rediger" HorizontalAlignment="Left" Margin="80,370,0,0" VerticalAlignment="Top" Width="59" Click="btn_Edit_Click"/>
+        <Button x:Name="btn_Delete" Content="Slet" HorizontalAlignment="Left" Margin="150,370,0,0" VerticalAlignment="Top" Width="59" Click="btn_Delete_Click"/>
         <GroupBox Header="Information" HorizontalAlignment="Left" Height="377" Margin="214,36,0,0" VerticalAlignment="Top" Width="186">
             <Grid HorizontalAlignment="Left" Height="353" VerticalAlignment="Top" Width="176" Margin="0,0,-3.2,0">
                 <Label x:Name="Lejer" Content="Lejer:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -25,7 +25,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="10,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="86" Width="156" Text="En eller anden tekstblok med cykelbeskrivelse her"/>
             </Grid>
         </GroupBox>
-        <Button Content="Vejrudsigt" HorizontalAlignment="Left" Margin="10,394,0,0" VerticalAlignment="Top" Width="59"/>
+        <Button x:Name="btn_Weather" Content="Vejrudsigt" HorizontalAlignment="Left" Margin="10,394,0,0" VerticalAlignment="Top" Width="59" Click="btn_Weather_Click"/>
 
     </Grid>
 </Window>

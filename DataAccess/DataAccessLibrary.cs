@@ -12,7 +12,7 @@ namespace DataAccess
     public class CommonDB
     {
         //Fields
-        protected readonly string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog = CybellesCyklerDB; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        protected readonly string connectionString;
         
         //Constructors
         public CommonDB(string connectionString)
@@ -71,16 +71,13 @@ namespace DataAccess
         {
             string query = $"SELECT * FROM Renters WHERE ID={id}";
             DataSet data = ExecuteQuery(query);
-
-            DataRow row = data.Tables[0].Rows[0];
-            
+            DataRow row = data.Tables[0].Rows[0];            
             Rentee rentee = new Rentee(
                 (int)row["ID"], 
                 (DateTime)row["RegisterDate"], 
                 (string)row["PhoneNumber"], 
                 (string)row["PhysAddress"], 
                 (string)row["Name"]);
-
             return rentee;
         }
 
@@ -88,9 +85,7 @@ namespace DataAccess
         {
             string query = $"SELECT * FROM Orders WHERE ID={id}";
             DataSet data = ExecuteQuery(query);
-
             DataRow row = data.Tables[0].Rows[0];
-
             Order order = new Order(
                 (int)row["ID"], 
                 (DateTime)row["DeliverDate"], 
@@ -108,9 +103,7 @@ namespace DataAccess
         {
             string query = $"SELECT * FROM Renters WHERE ID={id}";
             DataSet data = ExecuteQuery(query);
-
             DataRow row = data.Tables[0].Rows[0];
-
             Bike bike = new Bike((int)row["ID"], (BikeKind)row[""], (string)row["BikeDescription"], (decimal)row["PricePerDay"]);
             return bike;
         }
@@ -123,13 +116,13 @@ namespace DataAccess
 
         public bool NewOrder(Order order)
         {
-            string query = $"INSERT INTO Renters VALUES ('{}'), ('{}'), ('{}'), ({})";
+            string query = $"INSERT INTO Orders(DeliverDate, OrderDate) VALUES ('{order.DeliveryDate}'), ('{order.RentDate}')";
             return ExecuteNonQuery(query);
         }
 
         public bool NewBike(Bike bike)
         {
-            string query = $"INSERT INTO Renters VALUES ('{bike.BikeDescription}'), ('{bike.PricePerDay}')";
+            string query = $"INSERT INTO Renters(BikeDescription, PricePerDay) VALUES ('{bike.BikeDescription}'), ('{bike.PricePerDay}')";
             return ExecuteNonQuery(query);
         }
 
@@ -146,6 +139,64 @@ namespace DataAccess
         public bool UpdateBike(Bike bike)
         {
 
+        }
+
+        public List<IPersistable> GetRentees()
+        {
+            string query = $"SELECT * FROM Renters";
+            List<IPersistable> rentees = new List<IPersistable>();
+            DataSet data = ExecuteQuery(query);
+            foreach (DataRow row in data.Tables[0].Rows)
+            {
+                Rentee rentee = new Rentee
+                (
+                    (int)row["ID"],
+                    (DateTime)row["RegisterDate"],
+                    (string)row["PhoneNumber"],
+                    (string)row["PhysAddress"],
+                    (string)row["Name"]                
+                );
+                rentees.Add(rentee);
+            }
+            return rentees;
+        }
+
+        public List<IPersistable> GetOrders()
+        {
+            string query = $"SELECT * FROM Orders";
+            List<IPersistable> orders = new List<IPersistable>();
+            DataSet data = ExecuteQuery(query);
+            foreach (DataRow row in data.Tables[0].Rows)
+            {
+                Order order = new Order
+                (
+                    (int)row["ID"], 
+                    (BikeKind)row[""], 
+                    (string)row["BikeDescription"], 
+                    (decimal)row["PricePerDay"]
+                );
+                orders.Add(order);
+            }
+            return orders;
+        }
+
+        public List<IPersistable> GetBikes()
+        {
+            string query = $"SELECT * FROM Bikes";
+            List<IPersistable> bikes = new List<IPersistable>();
+            DataSet data = ExecuteQuery(query);
+            foreach (DataRow row in data.Tables[0].Rows)
+            {
+                Bike bike = new Bike
+                (
+                    (int)row["ID"], 
+                    (BikeKind)row[""], 
+                    (string)row["BikeDescription"], 
+                    (decimal)row["PricePerDay"]
+                );
+                bikes.Add(bike);
+            }
+            return bikes;
         }
     }
 }
