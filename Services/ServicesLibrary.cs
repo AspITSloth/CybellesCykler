@@ -36,12 +36,16 @@ namespace Services
         //Methods
         public WeatherData TodaysWeather()
         {
+            //PLS FIX !!!!!!
             WeatherData weather = new WeatherData();
+            return weather;
         }
 
         public WeatherData TomorrowsWeather()
         {
-
+            //PLS FIX !!!!!!
+            WeatherData weather = new WeatherData();
+            return weather;
         }
 
     }

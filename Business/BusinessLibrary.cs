@@ -130,12 +130,14 @@ namespace Business
         //Methods
         public WeatherData TodaysWeather()
         {
-
+            WeatherData weather = new WeatherData();
+            return weather;
         }
 
         public WeatherData TomorrowsWeather()
         {
-
+            WeatherData weather = new WeatherData();
+            return weather;
         }
     }
 }

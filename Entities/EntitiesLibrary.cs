@@ -116,7 +116,7 @@ namespace Entities
         //Methods
         public override string ToString()
         {
-            return $"Lejer: {Rentee} Cykel: {Bike.Kind}";
+            return $"OrdreNr: [{ID}] Lejer: {Rentee} Cykel: {Bike.Kind}";
         }
         public decimal GetPrice()
         {
@@ -164,6 +164,13 @@ namespace Entities
         public Bike(int iD, BikeKind kind, string bikeDescription, decimal pricePerDay)
         {
             ID = iD;
+            Kind = kind;
+            BikeDescription = bikeDescription;
+            PricePerDay = pricePerDay;
+        }
+
+        public Bike(BikeKind kind, string bikeDescription, decimal pricePerDay)
+        {
             Kind = kind;
             BikeDescription = bikeDescription;
             PricePerDay = pricePerDay;

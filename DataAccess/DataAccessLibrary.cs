@@ -35,6 +35,7 @@ namespace DataAccess
                 }
                 return dataSet;
             }
+            catch (SqlException) { throw; }
             catch (Exception)
             {
                 throw;
@@ -53,6 +54,7 @@ namespace DataAccess
                 }
                 return true;
             }
+            catch (SqlException) { throw; }
             catch (Exception)
             {
                 return false;
@@ -86,16 +88,14 @@ namespace DataAccess
             string query = $"SELECT * FROM Orders WHERE ID={id}";
             DataSet data = ExecuteQuery(query);
             DataRow row = data.Tables[0].Rows[0];
-            Order order = new Order(
+            Order order = new Order
+            (
                 (int)row["ID"], 
                 (DateTime)row["DeliverDate"], 
-                (DateTime)row["OrderDate"], 
-                    new Bike(
-                    (int)row["ID"], 
-                    (BikeKind)row[""], 
-                    (string)row["BikeDescription"], 
-                    (decimal)row["PricePerDay"]));
-
+                (DateTime)row["OrderDate"],
+                (Rentee)row["Rentee"],
+                (Bike)row["Bike"]
+            );
             return order;
         }
 
@@ -104,41 +104,50 @@ namespace DataAccess
             string query = $"SELECT * FROM Renters WHERE ID={id}";
             DataSet data = ExecuteQuery(query);
             DataRow row = data.Tables[0].Rows[0];
-            Bike bike = new Bike((int)row["ID"], (BikeKind)row[""], (string)row["BikeDescription"], (decimal)row["PricePerDay"]);
+            Bike bike = new Bike
+            (
+                (int)row["ID"], 
+                (BikeKind)row["BikeKind"], 
+                (string)row["BikeDescription"], 
+                (decimal)row["PricePerDay"]
+            );
             return bike;
         }
 
         public bool NewRentee(Rentee rentee)
         {
-            string query = $"INSERT INTO Renters(Name, PhoneNumber, PhysAddress, RegisterDate) VALUES ('{rentee.Name}'), ('{rentee.PhoneNumber}'), ('{rentee.Address}'), ({rentee.RegisterDate})";
+            string query = $"INSERT INTO Renters(Name, PhoneNumber, PhysAddress, RegisterDate) VALUES (('{rentee.Name}'), ('{rentee.PhoneNumber}'), ('{rentee.Address}'), ({rentee.RegisterDate}))";
             return ExecuteNonQuery(query);
         }
 
         public bool NewOrder(Order order)
         {
-            string query = $"INSERT INTO Orders(DeliverDate, OrderDate) VALUES ('{order.DeliveryDate}'), ('{order.RentDate}')";
+            string query = $"INSERT INTO Orders(DeliverDate, OrderDate) VALUES (('{order.DeliveryDate}'), ('{order.RentDate}'))";
             return ExecuteNonQuery(query);
         }
 
         public bool NewBike(Bike bike)
         {
-            string query = $"INSERT INTO Renters(BikeDescription, PricePerDay) VALUES ('{bike.BikeDescription}'), ('{bike.PricePerDay}')";
+            string query = $"INSERT INTO Bikes(BikeDescription, PricePerDay, BikeKind) VALUES (('{bike.BikeDescription}'), ({bike.PricePerDay}), ('{bike.Kind}'))";
             return ExecuteNonQuery(query);
         }
 
         public bool UpdateRentee(Rentee rentee)
         {
-
+            string query = $"";
+            return ExecuteNonQuery(query);
         }
 
         public bool UpdateOrder(Order order)
         {
-
+            string query = $"";
+            return ExecuteNonQuery(query);
         }
 
         public bool UpdateBike(Bike bike)
         {
-
+            string query = $"";
+            return ExecuteNonQuery(query);
         }
 
         public List<IPersistable> GetRentees()
@@ -165,15 +174,17 @@ namespace DataAccess
         {
             string query = $"SELECT * FROM Orders";
             List<IPersistable> orders = new List<IPersistable>();
-            DataSet data = ExecuteQuery(query);
-            foreach (DataRow row in data.Tables[0].Rows)
+            
+            DataSet Orders = ExecuteQuery(query);
+            foreach (DataRow row in Orders.Tables[0].Rows)
             {
                 Order order = new Order
                 (
-                    (int)row["ID"], 
-                    (BikeKind)row[""], 
-                    (string)row["BikeDescription"], 
-                    (decimal)row["PricePerDay"]
+                    (int)row["ID"],
+                    (DateTime)row["DeliverDate"],
+                    (DateTime)row["OrderDate"],
+                    (Rentee)row["Rentee"],
+                    (Bike)row["Bike"]
                 );
                 orders.Add(order);
             }
@@ -190,7 +201,7 @@ namespace DataAccess
                 Bike bike = new Bike
                 (
                     (int)row["ID"], 
-                    (BikeKind)row[""], 
+                    (BikeKind) row["BikeKind"],
                     (string)row["BikeDescription"], 
                     (decimal)row["PricePerDay"]
                 );

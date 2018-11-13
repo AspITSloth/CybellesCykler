@@ -26,23 +26,32 @@ namespace CybellesCykler
 
         private DataController dataController = new DataController(connectionString);
 
-        public ObservableCollection<IPersistable> orders;
+        private ObservableCollection<Order> ordersList;
+
+        public ObservableCollection<Order> OrdersList
+        {
+            get{ return ordersList; }
+            set{ ordersList = value; }
+        }
+
+        public ObservableCollection<Order> GetOrders()
+        {
+            foreach (Order entity in dataController.GetEntities("Order"))
+            {
+                OrdersList.Add(entity);
+            }
+            return OrdersList;
+        }
 
         public Orders()
-        {
-            foreach (IPersistable entity in dataController.GetEntities("Order"))
-            {
-                orders.Add(entity);
-            }
+        {            
             InitializeComponent();
+            DataContext = this;
         }
 
         private void btn_Create_Click(object sender, RoutedEventArgs e)
         {
-            ShowDialog();
-            Order order = new Order();
 
-            dataController.NewEntity(order);
         }
 
         private void btn_Edit_Click(object sender, RoutedEventArgs e)

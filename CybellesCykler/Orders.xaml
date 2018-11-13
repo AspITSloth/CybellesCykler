@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Orders" Height="454.4" Width="495.2">
     <Grid>
-        <ListBox x:Name="lbx_Orders" HorizontalAlignment="Left" Height="329" Margin="10,36,0,0" VerticalAlignment="Top" Width="199"/>
+        <ListBox ItemsSource="{Binding Path=Orders}" x:Name="lbx_Orders" HorizontalAlignment="Left" Height="329" Margin="10,36,0,0" VerticalAlignment="Top" Width="199"/>
         <Label Content="Orders" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="138"/>
         <Button x:Name="btn_Create" Content="Opret" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top" Width="59" Click="btn_Create_Click"/>
         <Button x:Name="btn_Edit" Content="Rediger" HorizontalAlignment="Left" Margin="80,370,0,0" VerticalAlignment="Top" Width="59" Click="btn_Edit_Click"/>
